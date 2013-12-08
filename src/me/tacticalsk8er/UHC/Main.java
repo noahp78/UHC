@@ -7,6 +7,12 @@ public class Main extends JavaPlugin{
 	@Override
 	public void onEnable(){
 		getCommand("uhc").setExecutor(new CommandUHC(this));
+		makeConfig();
+	}
+	
+	private void makeConfig(){
+		getConfig().options().header();
+		
 	}
 	
 }
