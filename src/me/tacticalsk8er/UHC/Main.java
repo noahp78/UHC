@@ -12,7 +12,6 @@ public class Main extends JavaPlugin{
 	
 	private void makeConfig(){
 		getConfig().options().header();
-		
 	}
 	
 }
