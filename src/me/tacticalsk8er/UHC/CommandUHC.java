@@ -41,7 +41,7 @@ public class CommandUHC implements CommandExecutor{
 				
 			}
 		}
-		return false;
+		return true;
 	}
 	
 }

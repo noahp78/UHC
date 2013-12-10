@@ -12,6 +12,14 @@ import org.bukkit.WorldCreator;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+/*
+ * Starts a UHC game.
+ * This class requires:
+ * 	- Main Class (JavaPlugin)
+ * 	- CommandSender (To send important messages)
+ *  - Command Args (To get other info for future features)
+ */
+
 public class CommandStart {
 	
 	public CommandStart(Main plugin, CommandSender sender, String[] args){
