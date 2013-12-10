@@ -1,5 +1,6 @@
 package me.tacticalsk8er.UHC;
 
+import me.tacticalsk8er.UHC.Main;
 import me.tacticalsk8er.UHC.Commands.CommandHelp;
 import me.tacticalsk8er.UHC.Commands.CommandStart;
 

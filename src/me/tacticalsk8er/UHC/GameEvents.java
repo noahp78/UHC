@@ -1,10 +1,12 @@
 package me.tacticalsk8er.UHC;
 
+import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scoreboard.Team;
 
 /*
@@ -30,6 +32,18 @@ public class GameEvents implements Listener {
 	
 	@EventHandler
 	public void onPlayerGameDeath(PlayerDeathEvent e){
+		Main.PlayerCount=(Main.PlayerCount-1);
+		if (Main.PlayerCount==0) {
+			e.setDeathMessage(e.getEntity().getName() + ChatColor.GREEN + " Won the game!");
+		}
+		if (!(Main.PlayerCount==0)) {
+			e.setDeathMessage("Player " + e.getEntity().getName().toString() + " Died and Didn't win");
+		}
+		
+	}
+	@SuppressWarnings("deprecation")
+	public void onPlayerLeave(PlayerQuitEvent e) {
+		e.getPlayer().setHealth(0);
 		
 	}
 	

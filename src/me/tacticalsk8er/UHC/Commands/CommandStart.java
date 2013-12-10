@@ -3,6 +3,7 @@ package me.tacticalsk8er.UHC.Commands;
 import me.tacticalsk8er.UHC.Main;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Difficulty;
 import org.bukkit.Instrument;
 import org.bukkit.Location;
@@ -36,6 +37,9 @@ public class CommandStart {
 			Location tele = UHC.getSpawnLocation();
 			p.teleport(tele);
 			players.append(p.getName() + " ");
+			p.sendMessage(ChatColor.GOLD + "[UHC]" + ChatColor.GREEN + "Game Starting soon, prepare for some lag.");
+		plugin.PlayerCount++;
+		
 		}
 		
 		sender.sendMessage("Spreading Players");
@@ -54,6 +58,10 @@ public class CommandStart {
 					Bukkit.getServer().broadcastMessage("Game Started!");
 					for(Player p: UHC.getPlayers()){
 						p.playNote(p.getLocation(), Instrument.PIANO, Note.natural(1, Note.Tone.C));
+						p.setFoodLevel(20);
+						Main.GameStarted = true;
+						
+						
 					}
 				}
 			}
