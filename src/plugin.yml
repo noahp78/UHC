@@ -1,6 +1,6 @@
 name: UHC
 main: me.tacticalsk8er.UHC
-author: tacticalsk8er
+author: tacticalsk8er; noahp78
 description: Allows admins to create quick and easy UHC games. This game was created by the creative minds of the mindcrackers.
 commands:
   - uhc
