@@ -6,3 +6,7 @@
 *.ear
 /target
 /bin
+
+# Eclipse Files #
+.project
+.classpath
