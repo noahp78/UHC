@@ -25,26 +25,21 @@ public class CommandUHC implements CommandExecutor {
 
 		if (args.length == 0) {
 			new CommandHelp(sender, args);
-		}
-		if (args[0].equalsIgnoreCase("help")) {
-			new CommandHelp(sender, args);
-		}
-		if (args[0].equalsIgnoreCase("start")) {
-			new CommandStart(plugin, sender, args);
-		}
-		if (args[0].equalsIgnoreCase("stop")) {
+		} else if (args.length > 0) {
+			if (args[0].equalsIgnoreCase("help")) {
+				new CommandHelp(sender, args);
+			} else if (args[0].equalsIgnoreCase("start")) {
+				new CommandStart(plugin, sender, args);
+			} else if (args[0].equalsIgnoreCase("stop")) {
 
-		}
-		if (args[0].equalsIgnoreCase("team")) {
-			new CommandTeam(plugin, sender, args);
-		}
-		if (args[0].equalsIgnoreCase("rules")) {
+			} else if (args[0].equalsIgnoreCase("team")) {
+				new CommandTeam(plugin, sender, args);
+			} else if (args[0].equalsIgnoreCase("rules")) {
 
-		}
-		// For Invalid Command catching
-		if (args.length > 0) {
-			sender.sendMessage("Invalid Command. Sending help prompt.");
-			new CommandHelp(sender, args);
+			} else {
+				sender.sendMessage("Invalid Command. Sending help prompt.");
+				new CommandHelp(sender, args);
+			}
 		}
 		return true;
 	}

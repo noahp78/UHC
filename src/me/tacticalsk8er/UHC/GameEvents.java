@@ -40,7 +40,7 @@ public class GameEvents implements Listener {
 			e.setDeathMessage(p.getName() + ChatColor.GREEN + " Won the game!");
 		}
 		if (!(Main.PlayerCount == 0)) {
-			e.setDeathMessage("Player " + p.getName().toString() + " Died by the hands of " + p.getKiller().getCustomName());
+			e.setDeathMessage("Player " + p.getName().toString() + " Died");
 			Main.PlayerCount--;
 			spectators.addPlayer(p);
 			p.setFlying(true);

@@ -84,15 +84,16 @@ public class CommandStart {
 		plugin.GameCountDown = true;
 		plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 
-			int s = 5;
+			int seconds = 5;
 
 			public void run() {
-				if (s != 0) {
-					Bukkit.getServer().broadcastMessage(s + " second(s) remaining!");
+				if (seconds != 0) {
+					Bukkit.getServer().broadcastMessage(seconds + " second(s) remaining!");
 					for (Player p : UHC.getPlayers()) {
 						p.playNote(p.getLocation(), Instrument.PIANO, Note.natural(0, Note.Tone.C));
 					}
-				} else if (s <= 0) {
+					seconds--;
+				} else if (seconds <= 0) {
 					Bukkit.getServer().broadcastMessage("Game Started!");
 					for (Player p : UHC.getPlayers()) {
 						p.playNote(p.getLocation(), Instrument.PIANO, Note.natural(1, Note.Tone.C));
