@@ -93,7 +93,7 @@ public class CommandStart {
 						p.playNote(p.getLocation(), Instrument.PIANO, Note.natural(0, Note.Tone.C));
 					}
 					seconds--;
-				} else if (seconds <= 0) {
+				} else if (seconds = 0) {
 					Bukkit.getServer().broadcastMessage("Game Started!");
 					for (Player p : UHC.getPlayers()) {
 						p.playNote(p.getLocation(), Instrument.PIANO, Note.natural(1, Note.Tone.C));
