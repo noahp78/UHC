@@ -1,7 +1,5 @@
 package me.tacticalsk8er.UHC;
 
-import java.util.List;
-
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
@@ -12,8 +10,7 @@ public class Main extends JavaPlugin {
 
 	public ScoreboardManager manager;
 	public Scoreboard Team;
-	public Team Spectators;
-	public List<Team> Teams;
+	public static Team Spectators;
 
 	public static boolean GameStarted = false;
 	public static boolean GameCountDown = false;
@@ -25,11 +22,6 @@ public class Main extends JavaPlugin {
 		manager = Bukkit.getScoreboardManager();
 		Team = manager.getNewScoreboard();
 		Spectators = Team.registerNewTeam("Spectators");
-		for (int i = 1; i <= getConfig().getInt("TeamSettings.MaxTeams"); i++) {
-			Team GameTeam = Team.registerNewTeam("1");
-			Teams.add(GameTeam);
-		}
-
 		getServer().getPluginManager().registerEvents(new GameEvents(this, Spectators), this);
 		makeConfig();
 	}

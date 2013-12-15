@@ -9,32 +9,39 @@ import org.bukkit.scoreboard.Team;
 public class CommandTeam {
 
 	public CommandTeam(Main plugin, CommandSender sender, String[] args) {
-		if (args[1].equalsIgnoreCase("join")) {
-			if (sender instanceof Player) {
-				Player p = (Player) sender;
-				int Team = 0;
-				try {
-					Team = Integer.parseInt(args[2]);
-				} catch (NumberFormatException e) {
-					sender.sendMessage("Invalid Command: Argument 3 needs to be an integer");
-				}
-				if (Team <= 0) {
-					sender.sendMessage("Invalid Command: Team needs to be 1 or higher!");
+		if (args.length > 1) {
+			if (args[1].equalsIgnoreCase("join")) {
+				if (!(sender instanceof Player)) {
+					sender.sendMessage("You must be a player to use this command!");
 				} else {
-					if (Team <= plugin.getConfig().getInt("TeamSettings.MaxTeams")) {
-						sender.sendMessage("Invalid Team Number: You're Team Number is beyond the max allowed Teams");
-					} else {
-						Team playerTeam = plugin.Teams.get(Team);
-						if (playerTeam.getSize() < plugin.getConfig().getInt("TeamSettings.MaxTeamSize")) {
-							playerTeam.addPlayer(p);
+					Player p = (Player) sender;
+					if (args.length > 2) {
+						String team = args[2];
+						Team playerTeam = plugin.Team.getTeam(team);
+						if (playerTeam == null) {
+							if (plugin.Team.getTeams().size() >= plugin.getConfig().getInt("TeamSettings.MaxTeams")) {
+								sender.sendMessage("Max number of teams has been reached, try join a team.");
+							} else {
+								playerTeam = plugin.Team.registerNewTeam(team);
+								playerTeam.addPlayer(p);
+								sender.sendMessage("You have created and have been added to the " + team + " Team.");
+							}
 						} else {
-							sender.sendMessage("Team is full try to join another team.");
+							if (playerTeam.getSize() >= plugin.getConfig().getInt("TeamSetting.MaxTeamSize")) {
+								sender.sendMessage("Team is full, join of create another team!");
+							} else {
+								playerTeam.addPlayer(p);
+								sender.sendMessage("You have been added to the " + team + " Team");
+							}
 						}
+					} else {
+						sender.sendMessage("Invalid Command: Needs more arguments!");
 					}
 				}
-			} else {
-				sender.sendMessage("You must be a player to use this command!");
 			}
+		} else {
+			sender.sendMessage("Invaild Command: Needs more arguments!");
 		}
 	}
+
 }

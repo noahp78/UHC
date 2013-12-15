@@ -36,8 +36,6 @@ public class CommandStart {
 		UHC.setPVP(true);
 		UHC.setGameRuleValue("naturalRegeneration", "false");
 
-		
-
 		// Teleport players to new world
 		sender.sendMessage("Teleporting Players");
 		StringBuilder players = new StringBuilder();
@@ -52,6 +50,12 @@ public class CommandStart {
 
 		sender.sendMessage("Spreading Players");
 		plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "spreadplayers 0 0 " + plugin.getConfig().getInt("GameSettings.SpreadDistance") + " " + plugin.getConfig().getInt("GameSettings.Raduis") + " true " + players);
+		for (Player p : plugin.getServer().getOnlinePlayers()) {
+			Location loc = p.getLocation();
+			loc = loc.add(0, -1, 0);
+			Block block = loc.getBlock();
+			block.setType(Material.STONE);
+		}
 		// Set up Walls (MAY CAUSE LAG)
 		// TODO Test to see if this causes lag
 		for (int i = 0; i <= Raduis; i++) {
@@ -87,7 +91,7 @@ public class CommandStart {
 			int seconds = 5;
 
 			public void run() {
-				if (seconds != 0) {
+				if (seconds > 0) {
 					Bukkit.getServer().broadcastMessage(seconds + " second(s) remaining!");
 					for (Player p : UHC.getPlayers()) {
 						p.playNote(p.getLocation(), Instrument.PIANO, Note.natural(0, Note.Tone.C));
@@ -98,13 +102,15 @@ public class CommandStart {
 					for (Player p : UHC.getPlayers()) {
 						p.playNote(p.getLocation(), Instrument.PIANO, Note.natural(1, Note.Tone.C));
 						p.setFoodLevel(20);
-						Main.GameCountDown = false;
-						Main.GameStarted = true;
+						p.setHealth(20);
+						seconds--;
 					}
+					Main.GameCountDown = false;
+					Main.GameStarted = true;
 				}
 			}
 
-		}, 20L, 100L);
+		}, 0L, 20L);
 
 	}
 
