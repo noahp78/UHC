@@ -3,3 +3,7 @@ jdk:
   - oraclejdk7
   - openjdk7
   - openjdk6
+
+deploy:
+  - provider: heroku
+    api_key: "9b161d2f-a2ab-418c-8fe5-b005b76c689f"
