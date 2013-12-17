@@ -33,20 +33,41 @@ public class GameEvents implements Listener {
 	// When player dies, player joins spectators, is invisible, and can fly.
 	@EventHandler
 	public void onPlayerGameDeath(PlayerDeathEvent e) {
-		Main.PlayerCount = (Main.PlayerCount - 1);
-		Player p = e.getEntity();
+		if (Main.GameStarted) {
+			Main.PlayerCount = (Main.PlayerCount - 1);
+			Player p = e.getEntity();
 
-		if (Main.PlayerCount == 0) {
-			e.setDeathMessage(p.getName() + ChatColor.GREEN + " Won the game!");
-		}
-		if (!(Main.PlayerCount == 0)) {
-			e.setDeathMessage("Player " + p.getName().toString() + " Died");
-			Main.PlayerCount--;
-			spectators.addPlayer(p);
-			p.setFlying(true);
-			// Invisibility for spectators
-			for (Player players : plugin.getServer().getOnlinePlayers()) {
-				players.hidePlayer(p);
+			if (Main.PlayerCount == 0) {
+				e.setDeathMessage("Player " + p.getName().toString() + " Died");
+				spectators.addPlayer(p);
+				p.setAllowFlight(true);
+				p.setFlying(true);
+				// Invisibility for spectators
+				for (Player players : plugin.getServer().getOnlinePlayers()) {
+					players.hidePlayer(p);
+				}
+				for (Player player : plugin.getServer().getOnlinePlayers()) {
+					if (!(plugin.Spectators.hasPlayer(player))) {
+						plugin.getServer().broadcastMessage(player.getName() + ChatColor.GREEN + " Won the game!");
+						spectators.addPlayer(player);
+						player.setFlying(true);
+						// Invisibility for spectators
+						for (Player players : plugin.getServer().getOnlinePlayers()) {
+							players.hidePlayer(player);
+						}
+					}
+				}
+			}
+			if (!(Main.PlayerCount == 0)) {
+				e.setDeathMessage("Player " + p.getName().toString() + " Died");
+				Main.PlayerCount--;
+				spectators.addPlayer(p);
+				p.setAllowFlight(true);
+				p.setFlying(true);
+				// Invisibility for spectators
+				for (Player players : plugin.getServer().getOnlinePlayers()) {
+					players.hidePlayer(p);
+				}
 			}
 		}
 
@@ -55,15 +76,19 @@ public class GameEvents implements Listener {
 	// Player loses if player leaves
 	@EventHandler
 	public void onPlayerLeave(PlayerQuitEvent e) {
-		e.getPlayer().setHealth(0);
-		Main.PlayerCount--;
+		if (Main.GameStarted) {
+			e.getPlayer().setHealth(0);
+			Main.PlayerCount--;
+		}
 	}
 
 	// Used for stopping player movement when count down timer is going.
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent e) {
-		if (plugin.GameCountDown)
-			e.setCancelled(true);
+		if (plugin.GameCountDown) {
+			e.getPlayer().teleport(e.getFrom());
+			e.getPlayer().sendMessage("You are not allowed to move till the countdown is finished!");
+		}
 
 	}
 
@@ -93,7 +118,6 @@ public class GameEvents implements Listener {
 	public void OnLogin(PlayerJoinEvent event) {
 		// Kick player on join if the game has started...
 		if (plugin.GameStarted) {
-
 			event.setJoinMessage("");
 			event.getPlayer().kickPlayer("Game In Progress - Try again later");
 
