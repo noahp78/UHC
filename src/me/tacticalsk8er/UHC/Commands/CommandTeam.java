@@ -69,7 +69,7 @@ public class CommandTeam {
 				sender.sendMessage(sb.toString());
 			}
 		} else {
-			sender.sendMessage("Invaild Command: Needs more arguments!");
+			sender.sendMessage("Invaild Command: Needs more arguments! [usage: [/uhc team list] or [/uhc team join [team]] [or /uhc team leave]");
 		}
 	}
 
