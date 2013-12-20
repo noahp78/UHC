@@ -1,11 +1,14 @@
 package me.tacticalsk8er.UHC;
 
 import org.bukkit.ChatColor;
+import org.bukkit.entity.EnderDragon;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -113,15 +116,33 @@ public class GameEvents implements Listener {
 			}
 		}
 	}
-
+// kick player if game has started, NEEDS Checking if the player died ingame or not (crashes on world generation, read time outs)
 	@EventHandler
 	public void OnLogin(PlayerJoinEvent event) {
-		// Kick player on join if the game has started...
 		if (plugin.GameStarted) {
 			event.setJoinMessage("");
-			event.getPlayer().kickPlayer("Game In Progress - Try again later");
+			event.getPlayer().kickPlayer("Game In Progress - Try again later");}
+		
 
+		}
+		
+	@EventHandler
+	public void onEntityDeath(EntityDeathEvent event){
+		//see if the enderdragon died
+		Entity entity = event.getEntity();
+		if (entity instanceof EnderDragon){
+			if (plugin.getConfig().getBoolean("GameSettings.EnderdragonGameEnd")){
+				if (event.getEntity().getKiller() != null) {
+					 Player player = event.getEntity().getKiller();
+					 plugin.getServer().broadcastMessage(player.getName() + ChatColor.GREEN + player.getName().toString() + "won the games by killing the EnderDragon");
+					 
+			}
+			
+			
+			
 		}
 	}
 
 }
+}
+

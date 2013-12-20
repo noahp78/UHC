@@ -16,7 +16,8 @@ public class Main extends JavaPlugin {
 	public static boolean GameCountDown = false;
 	public static int PlayerCount = 0;
 
-	@Override
+	
+
 	public void onEnable() {
 		getCommand("uhc").setExecutor(new CommandUHC(this));
 		manager = Bukkit.getScoreboardManager();
@@ -36,6 +37,9 @@ public class Main extends JavaPlugin {
 			getConfig().set("TeamSettings.MaxTeams", 8);
 		if (!(getConfig().contains("TeamSettings.MaxTeamSize")))
 			getConfig().set("TeamSettings.MaxTeamSize", 2);
+		if (!(getConfig().contains("GameSettings.EnderdragonGameEnd")))
+			getConfig().set("GameSettings.EnderdragonGameEnd", true);
+		
 		saveConfig();
 	}
 
