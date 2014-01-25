@@ -67,6 +67,18 @@ public class CommandTeam {
 					}
 				}
 				sender.sendMessage(sb.toString());
+			} else if (args[1].equalsIgnoreCase("color")) {
+				if (args.length > 2) {
+					String[] colors = { "Black", "DarkBlue", "DarkGreen", "DarkAqua", "DarkRed", "DarkPurple", "Gold", "Gray", "DarkGray", "Blue", "Green", "Aqua", "Red", "LightPurple", "Yellow", "White" };
+					for (String s : colors) {
+						if (args[2].equalsIgnoreCase(s)) {
+							s = s.toUpperCase();
+
+						}
+					}
+				} else {
+					sender.sendMessage("Invalid Command: Missing Argument \"Color\"");
+				}
 			}
 		} else {
 			sender.sendMessage("Invaild Command: Needs more arguments! [usage: [/uhc team list] or [/uhc team join [team]] [or /uhc team leave]");

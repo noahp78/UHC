@@ -1,5 +1,7 @@
 package me.tacticalsk8er.UHC.Commands;
 
+import java.io.File;
+
 import me.tacticalsk8er.UHC.Main;
 
 import org.bukkit.Bukkit;
@@ -24,9 +26,25 @@ import org.bukkit.entity.Player;
 
 public class CommandStart {
 
+	
+	static Main plugin;
+	
+	public CommandStart(Main instance) {
+		plugin = instance;
+	}
+	
+	
 	public CommandStart(Main plugin, CommandSender sender, String[] args) {
 
 		int Raduis = plugin.getConfig().getInt("GameSettings.Raduis");
+
+		if (Bukkit.getWorld("UHC") != null) {
+			sender.sendMessage("Deleting Old World");
+			World deleteUHC = Bukkit.getWorld("UHC");
+			File worldFolder = deleteUHC.getWorldFolder();
+			Bukkit.unloadWorld("UHC", false);
+			worldFolder.delete();
+		}
 
 		sender.sendMessage("Creating New World");
 		WorldCreator UHCreate = new WorldCreator("UHC");
@@ -44,7 +62,7 @@ public class CommandStart {
 			p.setBedSpawnLocation(tele);
 			players.append(p.getName() + " ");
 			p.sendMessage(ChatColor.GOLD + "[UHC]" + ChatColor.GREEN + "Game Starting soon, prepare for some lag.");
-			plugin.PlayerCount++;
+			Main.PlayerCount++;
 
 		}
 
@@ -87,7 +105,7 @@ public class CommandStart {
 		}
 
 		// Timed Start
-		plugin.GameCountDown = true;
+		Main.GameCountDown = true;
 		plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 
 			int seconds = 5;

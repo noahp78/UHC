@@ -8,15 +8,15 @@ import org.bukkit.scoreboard.Team;
 
 public class Main extends JavaPlugin {
 
+	public static Main plugin;
+
 	public ScoreboardManager manager;
 	public Scoreboard Team;
-	public static Team Spectators;
+	public Team Spectators;
 
 	public static boolean GameStarted = false;
 	public static boolean GameCountDown = false;
 	public static int PlayerCount = 0;
-
-	
 
 	public void onEnable() {
 		getCommand("uhc").setExecutor(new CommandUHC(this));
@@ -39,7 +39,7 @@ public class Main extends JavaPlugin {
 			getConfig().set("TeamSettings.MaxTeamSize", 2);
 		if (!(getConfig().contains("GameSettings.EnderdragonGameEnd")))
 			getConfig().set("GameSettings.EnderdragonGameEnd", true);
-		
+
 		saveConfig();
 	}
 

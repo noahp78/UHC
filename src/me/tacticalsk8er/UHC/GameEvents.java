@@ -27,9 +27,8 @@ public class GameEvents implements Listener {
 	Main plugin;
 	Team spectators;
 
-	public GameEvents(Main plugin, Team spectators) {
-		this.plugin = plugin;
-
+	public GameEvents(Main instance, Team spectators) {
+		plugin = instance;
 		this.spectators = spectators;
 	}
 
@@ -88,7 +87,7 @@ public class GameEvents implements Listener {
 	// Used for stopping player movement when count down timer is going.
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent e) {
-		if (plugin.GameCountDown) {
+		if (Main.GameCountDown) {
 			e.getPlayer().teleport(e.getFrom());
 			e.getPlayer().sendMessage("You are not allowed to move till the countdown is finished!");
 		}
@@ -116,33 +115,33 @@ public class GameEvents implements Listener {
 			}
 		}
 	}
-// kick player if game has started, NEEDS Checking if the player died ingame or not (crashes on world generation, read time outs)
+
+	// kick player if game has started, NEEDS Checking if the player died in
+	// game
+	// or not (crashes on world generation, read time outs)
 	@EventHandler
 	public void OnLogin(PlayerJoinEvent event) {
-		if (plugin.GameStarted) {
+		if (Main.GameStarted) {
 			event.setJoinMessage("");
-			event.getPlayer().kickPlayer("Game In Progress - Try again later");}
-		
+			event.getPlayer().kickPlayer("Game In Progress - Try again later");
+		}
 
-		}
-		
-	@EventHandler
-	public void onEntityDeath(EntityDeathEvent event){
-		//see if the enderdragon died
-		Entity entity = event.getEntity();
-		if (entity instanceof EnderDragon){
-			if (plugin.getConfig().getBoolean("GameSettings.EnderdragonGameEnd")){
-				if (event.getEntity().getKiller() != null) {
-					 Player player = event.getEntity().getKiller();
-					 plugin.getServer().broadcastMessage(player.getName() + ChatColor.GREEN + player.getName().toString() + "won the games by killing the EnderDragon");
-					 
-			}
-			
-			
-			
-		}
 	}
 
-}
-}
+	@EventHandler
+	public void onEntityDeath(EntityDeathEvent event) {
+		// see if the Enderdragon died
+		Entity entity = event.getEntity();
+		if (entity instanceof EnderDragon) {
+			if (plugin.getConfig().getBoolean("GameSettings.EnderdragonGameEnd")) {
+				if (event.getEntity().getKiller() != null) {
+					Player player = event.getEntity().getKiller();
+					plugin.getServer().broadcastMessage(player.getName() + ChatColor.GREEN + player.getName().toString() + "won the games by killing the EnderDragon");
 
+				}
+
+			}
+		}
+
+	}
+}
